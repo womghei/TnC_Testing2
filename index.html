@@ -25,11 +25,6 @@ var source = getParameterByName('utm_source');
 var medium = getParameterByName('utm_medium');
 var campaign = getParameterByName('utm_campaign');
  
-// Put the variable names into the hidden fields in the form.
-document.getElementsByName("utm_source").value = source;
-document.getElementsByName("utm_medium").value = medium;
-document.getElementsByName("utm_campaign").value = campaign;
-
 iframe = document.getElementById('myIframe');
 
 alert(iframe.src); 
