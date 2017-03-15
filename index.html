@@ -22,7 +22,7 @@ iframe {
 }
 </style>
 <body>	
-<h1>This is main site final</h1>
+<h1>This is main site final 1</h1>
 <script>
 // Parse the URL
 function getParameterByName(name) {
@@ -40,7 +40,10 @@ var frame = "https://iframe-site-framed-site.firebaseapp.com/" + '?utm_source=' 
 console.log(frame);
 
 </script>
-<iframe id="myIframe" width="560" height="315" src=frame></iframe>
+<iframe id="myIframe" width="560" height="315" src=''></iframe>
+<script>
+document.getElementById("myIframe").src = frame;
+</script>
 
 
 </body>
