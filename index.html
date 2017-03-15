@@ -1,5 +1,6 @@
 <head>
 	<title>Main site</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -25,14 +26,14 @@ var source = getParameterByName('utm_source');
 var medium = getParameterByName('utm_medium');
 var campaign = getParameterByName('utm_campaign');
  
-iframe = document.getElementById('myIframe');
-
-alert(iframe.src); 
-iframe.src = iframe.src + '?utm_source' + source + '&utm_campaign' + campaign + '&utm_medium' + medium ;
-alert(iframe.src); 
+var frame = document.getElementById('myIframe');
+frame.src = frame.src + '?utm_source' + source + '&utm_campaign' + campaign + '&utm_medium' + medium ;
+frame.contentWindow.postMessage(frame.src);
 
 });
 </script>
+
+
   </head>
 <style type="text/css">
 h1{
