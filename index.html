@@ -21,7 +21,8 @@ iframe {
   margin:auto;
 }
 </style>
-<body>
+<body>	
+<h1>This is main site final</h1>
 <script>
 // Parse the URL
 function getParameterByName(name) {
@@ -38,8 +39,7 @@ var campaign = getParameterByName('utm_campaign');
 var frame = "https://iframe-site-framed-site.firebaseapp.com/" + '?utm_source=' + source + '&utm_campaign=' + campaign + '&utm_medium=' + medium ;
 console.log(frame);
 
-</script>	
-<h1>This is main site Final</h1>
+</script>
 <iframe id="myIframe" width="560" height="315" src=frame></iframe>
 
 
