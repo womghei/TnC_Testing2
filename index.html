@@ -1,35 +1,16 @@
 <head>
 	<title>Main site</title>
-	<script>
-  		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-		
-  		ga('create', 'UA-70674965-17', 'auto');
-	</script>	
-<script>
-/*
-*  adapted from https://developers.google.com/analytics/devguides/collection/analyticsjs/cross-domain#iframes
-*  I wrapped the whole thing in a setTimeout, so I could observe the delayed execution time
-*  of the GA function in the JavaScript console, using the GA debugger Chrome plugin.
-*  alternatively, you could just wrap the frameWindow.postMessage in a setTimeout
-*/
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-setTimeout(function(){ 
-  ga(function(tracker) {
-    var clientId = tracker.get('clientId');
-    var frameWindow = document.getElementById('destination-frame').contentWindow;
-    // change https://xyz.shoppingcart.com to match your iFrame domain
-    frameWindow.postMessage(clientId, 'https://iframe-site-framed-site.firebaseapp.com/'); 
-  });
-}, 2000); 
-// I decided on a 2 second timeout by trial and error. In my case, this seemed to be
-// long enough to allow the iFrame to load > 95% of the time. Increasing the delay too
-// much risks having the user move on before being tracked at all
+  ga('create', 'UA-70674965-16', 'auto');
+  ga('send', 'pageview');
 
-</script>
-</head>
+  </script>
+  </head>
 <style type="text/css">
 h1{
 	text-align: center;
@@ -41,5 +22,5 @@ iframe {
 </style>
 <body>
 <h1>This is main site</h1>
-<iframe id="destination-frame" width="560" height="315" src="https://iframe-site-framed-site.firebaseapp.com/index_2.html"></iframe>
+<iframe id="destination-frame" width="560" height="315" src="https://iframe-site-framed-site.firebaseapp.com/"></iframe>
 </body>
