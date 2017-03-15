@@ -22,7 +22,8 @@ iframe {
 }
 </style>
 <body>
-<h1>This is main site 5</h1>
+<h1>This is main site 3</h1>
+<iframe id="myIframe" width="560" height="315" src="https://iframe-site-framed-site.firebaseapp.com/"></iframe>
 <script type="text/javascript">
 
 (function() {
@@ -39,10 +40,10 @@ var medium = getParameterByName('utm_medium');
 var campaign = getParameterByName('utm_campaign');
  
 var frame = document.getElementById('myIframe');
-frame.src = frame.src + '?utm_source' + source + '&utm_campaign' + campaign + '&utm_medium' + medium ;
+frame.src = frame.src + '?utm_source=' + source + '&utm_campaign=' + campaign + '&utm_medium=' + medium ;
 frame.contentWindow.postMessage(frame.src, '*');
 
 });
 </script>
-<iframe id="myIframe" width="560" height="315" src="https://iframe-site-framed-site.firebaseapp.com/"></iframe>
+
 </body>
