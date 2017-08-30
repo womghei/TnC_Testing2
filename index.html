@@ -15,7 +15,7 @@
 </script>
 </head>
 <body>
-  <h1>Added Logout 9</h1>
+  <h1>Added Logout 10</h1>
 <script>
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -93,7 +93,8 @@
       function logout(){
       FB.logout();
       console.log('Logged out');
-      checkLoginState()
+      checkLoginState();
+      statusChangeCallback(); 
       }
       ga('send', 'event','login','login','Facebook login');
     }); 
