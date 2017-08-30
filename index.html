@@ -15,7 +15,7 @@
 </script>
 </head>
 <body>
-  <h1>Added Logout 11</h1>
+  <h1>Added Logout 12</h1>
 <script>
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -90,12 +90,14 @@
         'Thanks for logging in, ' + response.name + '!';
       document.getElementById('logout').innerHTML ='<button id="logoutbtn">Logout</button>';
       document.getElementById("logoutbtn").addEventListener ("click", logout, false);
+      document.getElementById('fblogin').style = 'display:none'; 
       function logout(){
       FB.logout();
       console.log('Logged out');
       document.getElementById('status').innerHTML = 'Please log ' +
         'into this app.';
-      document.getElementById('logout').style = 'display:none';  
+      document.getElementById('logout').style = 'display:none'; 
+      location.reload();
       }
       ga('send', 'event','login','login','Facebook login');
     }); 
@@ -111,8 +113,10 @@
   the FB.login() function when clicked.
 -->
 
+<span id="fblogin">
 <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
 </fb:login-button>
+</span>  
 
 <div id="status">
 </div>
