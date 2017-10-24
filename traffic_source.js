@@ -74,6 +74,7 @@
         var expires = new Date();
         expires.setTime(expires.getTime() + 62208000000); //1000*60*60*24*30*24 (2 years)
         document.cookie = cookie + "=" + value + "; expires=" + expires.toGMTString() + "; domain=" + domain + "; path=/";
+	console.log('document.cookie: ',document.cookie);
     }
 
 	/**
@@ -129,6 +130,8 @@
 			
 			// CREATE THE COOKIE
 			setCookie(cookieName, traffic_source); //set the cookie
+			console.log('cookieName: ', cookieName);
+			console.log('traffic_source: ', traffic_source);
 			
 		} //End of CASE A if there is no traffic source cookie
 			
@@ -153,6 +156,7 @@
 			//Update the cookie with the new traffic_source of the new user visit
 			updated_traffic_source = traffic_source + traffic_source_COOKIE_TOKEN_SEPARATOR + getCookie(cookieName);
 			setCookie(cookieName, updated_traffic_source);
+			console.log('updated_traffic_source: ', updated_traffic_source)
 		}  //end of CASE B
 			
 			
