@@ -1,0 +1,12 @@
+#output {
+    clear: both;
+}
+
+#checkoutdiv {
+    display: none;
+}
+
+.footer {
+    background-color: darkgrey;
+    color: white;
+}
