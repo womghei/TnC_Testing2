@@ -159,4 +159,4 @@
 		
 	} 
 
-})("traffic_source", ".github");
+})("traffic_source", ".github.io");
