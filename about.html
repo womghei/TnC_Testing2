@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Shopping Cart Course Discoveryvip.com</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+        <script type="text/javascript">
+            var utag_data = {
+            }
+        </script>
+            
+            <!-- Loading script asynchronously -->
+            <script type="text/javascript">
+                (function(a,b,c,d){
+                a='//tags.tiqcdn.com/utag/womghei/main/dev/utag.js';
+                b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c;d.async=true;
+                a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
+                })();
+            </script>
+    <header class="header">
+        <div class="htop">
+            <div id="checkoutdiv " class="container">
+                <div class="row">
+                    <div class="col-md-6 text-xs-right ">(<span class="items text-muted"></span> <small>items</small>) <span class="total"></span> </div>
+                    <div class="col-md-6 text-xs-right"> <span class="btn btn-success" data-toggle="modal" data-target="#cart" id="cart-modal">Open Shopping Cart</span><a href="checkout.html" class="btn btn-primary">Proceed to checkout</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="hbot">
+            <div class="container">
+                <nav class="navbar navbar-full navbar-dark bg-inverse">
+                    <button class="navbar-toggler light float-xs-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#nvbar"></button>
+                    <div id="nvbar" class="collapse navbar-toggleable-xs">
+                        <ul class="nav navbar-nav float-sm-right ">
+                            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                            <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <div class="content">
+        <!-- content changes on each page -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-block">
+                            <h3 class="card-title">Best store ever!</h3>
+                            <img src="http://placehold.it/350x150" class="img-fluid"> </div>
+                        <!-- <div class="card-block">
+                            <div class="card-text">Product information description why its the best product ever blah blah <a href="#" class="productItem btn btn-primary" data-name="Cable" data-s="1" data-price="300" data-id="8">Add to Cart</a> </div>
+                        </div> -->
+                    </div>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mollis quis nulla vel egestas. Quisque laoreet enim dolor, et posuere nisi vulputate a. Praesent ullamcorper iaculis augue, sit amet mattis nunc mattis vitae. Nullam vehicula sapien volutpat convallis cursus. Fusce sed aliquam lorem, ac commodo mauris. Nullam vitae arcu eu urna aliquam sollicitudin. Etiam dignissim magna sed ornare efficitur. Fusce sodales tellus id metus ornare tincidunt ut id arcu. Morbi aliquet lacus at vulputate mollis. Donec nec odio sit amet urna ullamcorper mattis. Etiam hendrerit nunc ac neque feugiat sagittis. Ut varius orci sem, in ullamcorper leo ultrices sit amet. Nullam sodales, massa dapibus lacinia posuere, dui nisi ullamcorper lacus, eu pellentesque orci nisi sed diam.
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <p class="text-xs-center">© Copyright info blah blah </p>
+            </div>
+        </footer>
+        <!-- Modals -->
+        <div class="modal fade" id="cart" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title">Shopping Cart</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-hover">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Qty</th>
+                                    <th>Item Name</th>
+                                    <th>Cost</th>
+                                    <th class="text-xs-right">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="output"> </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Continue Shopping</button><a href="checkout.html" class="btn btn-primary">Proceed to checkout</a></div>
+                </div>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+        <script src="script.js"></script>
+        <script src="analytics.js"></script>
+</body>
+</html>
