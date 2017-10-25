@@ -85,9 +85,12 @@
             return href.replace(/.*?:\/\//g, "");
         }
         
-        
+        function duplicatedSource(){
+            var sourceCount = getCookie('traffic_source').split('>>').length;
+            return getCookie('traffic_source').split('>>')[sourceCount-1]==getURLParameter(tracking_parameter);
+        }
     
-        if (isRealReferrer()) { //if the last page was not the page of the website/domain...
+        if (isRealReferrer()&&duplicatedSource()==false) { //if the last page was not the page of the website/domain...
         
             //Variables that will be used by both cases - A & B
             //CASE A - a new session, if there is no traffic source cookie created previously.
@@ -158,6 +161,8 @@
                 
                 
             
-        } 
+        } else {
+            console.log("Duplicated trafffic source found.")
+        }
     
     })("traffic_source", ".github.io");
