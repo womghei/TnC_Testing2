@@ -90,7 +90,7 @@
             return getCookie('traffic_source').split('>>')[sourceCount-1]==getURLParameter(tracking_parameter);
         }
     
-        if (isRealReferrer()&&duplicatedSource()==false) { //if the last page was not the page of the website/domain...
+        if (isRealReferrer()) { //if the last page was not the page of the website/domain...
         
             //Variables that will be used by both cases - A & B
             //CASE A - a new session, if there is no traffic source cookie created previously.
@@ -129,11 +129,9 @@
                 } else {
                     traffic_source = "none or direct" + traffic_source;	
                 }
-                
-                
-                // CREATE THE COOKIE
+                    
                 setCookie(cookieName, traffic_source); //set the cookie
-                
+           
              } //End of CASE A if there is no traffic source cookie
                 
             
@@ -156,13 +154,16 @@
                     
                 //Update the cookie with the new traffic_source of the new user visit
                 updated_traffic_source = getCookie(cookieName)+traffic_source_COOKIE_TOKEN_SEPARATOR+traffic_source;
-                setCookie(cookieName, updated_traffic_source);
+               if (duplicatedSource()==false){
+                    setCookie(cookieName, updated_traffic_source); //set the cookie
+                } else {
+                    console.log("Duplicated traffic source detected")
+                }
+
          }  //end of CASE B
                 
                 
             
-        } else {
-            console.log("Duplicated trafffic source found.")
         }
     
     })("traffic_source", ".github.io");
