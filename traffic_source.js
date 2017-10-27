@@ -8,7 +8,7 @@
     */
     
         var traffic_source_COOKIE_TOKEN_SEPARATOR = ">>"; //separating between traffic source values. 
-        var site_hostname = "simple-eshop.firebaseapp.com"; //enter here your site. This will stop the script from populating with internal navigation
+        var site_hostname = "womghei.github.io"; //enter here your site. This will stop the script from populating with internal navigation
         var tracking_parameter = "cid"; //you can put here "utm_campaign" if you rather use your existing tagging, or any other query string parameter name. How to deal with Adwords auto-tagging without utm_campaign value? Check the documentation. 
         var expiredays = 7 //cookie expirary after x days
 
@@ -168,4 +168,4 @@
 
          }  //end of CASE B            
         }   
-    })("traffic_source", ".firebaseapp.com");
+    })("traffic_source", ".github.io");
