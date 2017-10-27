@@ -8,9 +8,10 @@
     */
     
         var traffic_source_COOKIE_TOKEN_SEPARATOR = ">>"; //separating between traffic source values. 
-        var site_hostname = "womghei.github.io"; //enter here your site. This will stop the script from populating with internal navigation
-        var tracking_parameter = "cid" //you can put here "utm_campaign" if you rather use your existing tagging, or any other query string parameter name. How to deal with Adwords auto-tagging without utm_campaign value? Check the documentation. 
-    
+        var site_hostname = "simple-eshop.firebaseapp.com"; //enter here your site. This will stop the script from populating with internal navigation
+        var tracking_parameter = "cid"; //you can put here "utm_campaign" if you rather use your existing tagging, or any other query string parameter name. How to deal with Adwords auto-tagging without utm_campaign value? Check the documentation. 
+        var expiredays = 7 //cookie expirary after x days
+
         /**
          * Checks if the referrer is a real referrer and not navigation through the same (sub)domain
          * @return true/false
@@ -73,7 +74,7 @@
          
         function setCookie(cookie, value){
             var expires = new Date();
-            expires.setTime(expires.getTime() + 62208000000); //1000*60*60*24*30*24 (2 years)
+            expires.setTime(expires.getTime() + (expiredays*24*60*60*1000)); //expire in days
             document.cookie = cookie + "=" + value + "; expires=" + expires.toGMTString()+";";
         }
     
@@ -86,8 +87,14 @@
         }
         
         function duplicatedSource(){
-            var sourceCount = getCookie('traffic_source').split('>>').length;
-            return getCookie('traffic_source').split('>>')[sourceCount-1]==getURLParameter(tracking_parameter);
+            var sourceCount = getCookie(cookieName).split(traffic_source_COOKIE_TOKEN_SEPARATOR).length;
+            return getCookie(cookieName).split(traffic_source_COOKIE_TOKEN_SEPARATOR)[sourceCount-1]==getURLParameter(tracking_parameter);
+        }
+
+        function duplicatedDirectNone(){
+            var sourceCount = getCookie(cookieName).split(traffic_source_COOKIE_TOKEN_SEPARATOR).length;
+            console.log("duplicatedDirectNone: ", getCookie(cookieName).split(">>")[sourceCount-1]=="none or direct")
+            return getCookie(cookieName).split(traffic_source_COOKIE_TOKEN_SEPARATOR)[getCookie(cookieName).split(traffic_source_COOKIE_TOKEN_SEPARATOR).length-1]=="none or direct";
         }
     
         if (isRealReferrer()) { //if the last page was not the page of the website/domain...
@@ -101,47 +108,46 @@
             
     
             if(document.cookie.indexOf(cookieName) === -1) //CASE A starts
-            {				
-                //First check is there is and old UTMZ cookie if we can use
-                var utmzCookie = getCookie("__utmz"); //get ga.js cookie
-                if(utmzCookie != null) { //if there is UTMZ cookie
-                    var utmzCookieCampaignValue = "";
-                    var UTMSRC = "utmccn=";
-                    var start = utmzCookie.indexOf(UTMSRC);
-                    var end = utmzCookie.indexOf("|", start); 
-                    if(start > -1) {
-                        if(end === -1) {
-                            end = utmzCookie.length; 
-                        }
-                    }
-                    utmzCookieCampaignValue = "utmz:" + utmzCookie.substring((start + UTMSRC.length), end); //get the value of the UTMZ, without the parameter name
-                    traffic_source = traffic_source_COOKIE_TOKEN_SEPARATOR + utmzCookieCampaignValue;				
-                }
-                
-                
+            {				                         
                 if (isNotNullOrEmpty(urlParamSRC)) { //if there is a SRC query string parameter 
-                    traffic_source = urlParamSRC + traffic_source;  //use it, add it to the variable
-                
+                    if (urlParamSRC.split(':')[2].includes("S")){
+                        traffic_source = 'social'
+                    } else if (urlParamSRC.split(':')[2].includes("P")){
+                        traffic_source = 'paid search'
+                    } else if (urlParamSRC.split(':')[2].includes("A")){
+                        traffic_source = 'affiliate'
+                    }
+                    else if (urlParamSRC.split(':')[2].includes("D")){
+                        traffic_source = 'display'
+                    } 
                 //if no SRC, check if there is a REFERRER 
                 } else if (isNotNullOrEmpty(document.referrer)){
-                    traffic_source = removeProtocol(document.referrer) + traffic_source;
-                    
+                    traffic_source = removeProtocol(document.referrer) + traffic_source;     
                 } else {
                     traffic_source = "none or direct" + traffic_source;	
-                }
-                    
-                setCookie(cookieName, traffic_source); //set the cookie
-           
+                }                
+                setCookie(cookieName, traffic_source); //set the cookie           
              } //End of CASE A if there is no traffic source cookie
-                
-            
-            
-            
+                           
            else {	//CASE B starts - traffic source cookie already exists
-                
                 //Get the traffic source value from the URL (if any)	
+                //cid=AMH:er:D0:IV::1709:1494:STMA
+                //AMH:pr:S0 = social
+                //AMH:pr:P0 = paid search
+                //AMH:pr:A0 = affiliate
+                //AMH:pr:D0 = display
                 if (isNotNullOrEmpty(urlParamSRC)) { //if there is a traffic source query string parameter 
-                    traffic_source = urlParamSRC;  //use it, add it to the variable
+                    if (urlParamSRC.split(':')[2].includes("S")){
+                        traffic_source = 'social'
+                    } else if (urlParamSRC.split(':')[2].includes("P")){
+                        traffic_source = 'paid search'
+                    } else if (urlParamSRC.split(':')[2].includes("A")){
+                        traffic_source = 'affiliate'
+                    }
+                    else if (urlParamSRC.split(':')[2].includes("D")){
+                        traffic_source = 'display'
+                    }
+                    //traffic_source = urlParamSRC;  //use it, add it to the variable
                         
                 //if no traffic source value as a query string parameter, check if there is a REFERRER 
                 } else if (isNotNullOrEmpty(document.referrer)) {
@@ -149,21 +155,17 @@
                     
                 } else {
                     traffic_source = "none or direct" + traffic_source;
-                }
-                    
-                    
+                }    
                 //Update the cookie with the new traffic_source of the new user visit
                 updated_traffic_source = getCookie(cookieName)+traffic_source_COOKIE_TOKEN_SEPARATOR+traffic_source;
-               if (duplicatedSource()==false){
+               if (traffic_source!=getCookie(cookieName).split(traffic_source_COOKIE_TOKEN_SEPARATOR)[getCookie(cookieName).split(traffic_source_COOKIE_TOKEN_SEPARATOR).length-1]){
                     setCookie(cookieName, updated_traffic_source); //set the cookie
                 } else {
+                    var original_traffic_source = getCookie(cookieName);
+                    setCookie(cookieName, original_traffic_source)
                     console.log("Duplicated traffic source detected")
                 }
 
-         }  //end of CASE B
-                
-                
-            
-        }
-    
-    })("traffic_source", ".github.io");
+         }  //end of CASE B            
+        }   
+    })("traffic_source", ".firebaseapp.com");
