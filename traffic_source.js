@@ -95,7 +95,15 @@
                 }
                 //if no SRC, check if there is a REFERRER 
             } else if (isNotNullOrEmpty(document.referrer)) {
-                traffic_source = removeProtocol(document.referrer) + traffic_source;
+                 if (document.referrer.includes("google") || document.referrer.includes("yahoo") || document.referrer.includes("baidu")) {
+                    traffic_source = 'natural search'
+                } else if (document.referrer.includes("facebook")) {
+                    traffic_source = 'facebook'
+                } else if (document.referrer.includes("instagram") || document.referrer.includes("wechat") || document.referrer.includes("twitter")) {
+                    traffic_source = 'organic social'
+                } else {
+                    traffic_source = 'referral'
+                }
             } else {
                 traffic_source = "none or direct" + traffic_source;
             }
