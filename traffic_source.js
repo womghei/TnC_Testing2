@@ -1,9 +1,15 @@
 (function(cookieName, domain) {
-    var traffic_source_COOKIE_TOKEN_SEPARATOR = ">>"; //separating between traffic source values. 
-    var site_hostname = "womghei.github.io"; //enter here your site. This will stop the script from populating with internal navigation
-    var tracking_parameter = "cid"; //you can put here "utm_campaign" if you rather use your existing tagging, or any other query string parameter name. How to deal with Adwords auto-tagging without utm_campaign value? Check the documentation. 
-    var expiredays = 7 //cookie expirary after x days
-
+    /* Global settings */
+    
+    var traffic_source_COOKIE_TOKEN_SEPARATOR = ">>"; //separating between traffic source values 
+    var site_hostname = "womghei.github.io"; //enter the host name to exclude internal navigation
+    var tracking_parameter = "cid"; //tracking code identifier, characters in between ? and = ?cid=
+    var expiredays = 7; //cookie expiries after 7 days
+    var source_short_code = {social : 's', affiliate : 'a', display: 'd', paidsearch: 'p'}; //todo: map them back
+    //var product_short_code = {social : 's', affiliate : 'a', display: 'd', paidsearch: 'p'} //todo: map them back
+     
+    /* End of global settings */
+    
     function isRealReferrer() {
         return document.referrer.split('/')[2] != site_hostname;
     }
