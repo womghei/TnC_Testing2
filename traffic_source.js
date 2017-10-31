@@ -1,32 +1,13 @@
-(function(cookieName, domain){
-    
-    /* Getting started:
-    * Change the site_hostname from "subdomain.domain.com" to your own website
-    * Change .YOUR-DOMAIN-HERE.com" at the bottom of the script.
-    * Other settings are optional - you are good to go!
-    * Credit: https://github.com/dm-guy/utm-alternative
-    */
-    
+(function(cookieName, domain){    
         var traffic_source_COOKIE_TOKEN_SEPARATOR = ">>"; //separating between traffic source values. 
         var site_hostname = "womghei.github.io"; //enter here your site. This will stop the script from populating with internal navigation
         var tracking_parameter = "cid"; //you can put here "utm_campaign" if you rather use your existing tagging, or any other query string parameter name. How to deal with Adwords auto-tagging without utm_campaign value? Check the documentation. 
         var expiredays = 7 //cookie expirary after x days
-
-        /**
-         * Checks if the referrer is a real referrer and not navigation through the same (sub)domain
-         * @return true/false
-         */
         
         function isRealReferrer(){
                 return document.referrer.split( '/' )[2] != site_hostname;
             }
             
-        
-        /**
-         * Receives a query string parameter name. 
-         * @return value of given query string parameter (if true); null if query string parameter is not present. 
-         */
-        
         function getURLParameter(param){
                 var pageURL = window.location.search.substring(1); //get the query string parameters without the "?"
                 var URLVariables = pageURL.split('&'); //break the parameters and values attached together to an array
@@ -38,12 +19,14 @@
                 }
                 return null;
             }	
-        
-        
-        /**
-         * Receives a cookie name. 
-         * @return Value of given cookie name
-         */
+
+        function getProduct(trackingCode){
+            return trackingCode.split(":")[3]
+        }    
+
+        function getCampaign(trackingCode){
+            return trackingCode.split(":")[7]
+        }
             
         function getCookie(cookieName){
             var name = cookieName + "=";
@@ -57,31 +40,16 @@
             return null;
         }	
         
-        
-        /**
-         * Checks if a string is empty.
-         * @return false if empty or null.
-         */
-        
         function isNotNullOrEmpty(string){
                 return string !== null && string !== "";
         }
-        
-        
-        /**
-         * Sets a new cookie. Receives cookie name and value. 
-         */
          
         function setCookie(cookie, value){
             var expires = new Date();
             expires.setTime(expires.getTime() + (expiredays*24*60*60*1000)); //expire in days
             document.cookie = cookie + "=" + value + "; expires=" + expires.toGMTString()+";";
         }
-    
-        /**
-         * removes referrer's protocol for cleaner data
-         * @return referrer without http:// | https://
-         */
+
         function removeProtocol(href) {
             return href.replace(/.*?:\/\//g, "");
         }
@@ -105,20 +73,25 @@
             
             var traffic_source = ""; //reset traffic source value
             var urlParamSRC = getURLParameter(tracking_parameter); //get value of the query string parameter (if any)
-            
-    
+            //var product = getProduct(urlParamSRC);
+            //var campaign = getCampaign(urlParamSRC);
+
+            console.log(product);
+            console.log(campaign);
+   
             if(document.cookie.indexOf(cookieName) === -1) //CASE A starts
             {				                         
                 if (isNotNullOrEmpty(urlParamSRC)) { //if there is a SRC query string parameter 
+                    var product = getProduct(urlParamSRC);
+                    var campaign = getCampaign(urlParamSRC);
                     if (urlParamSRC.split(':')[2].includes("S")){
-                        traffic_source = 'social'
+                        traffic_source = 'social_'+product+'_'+campaign;
                     } else if (urlParamSRC.split(':')[2].includes("P")){
-                        traffic_source = 'paid search'
+                        traffic_source = 'paid search_'+product+'_'+campaign;
                     } else if (urlParamSRC.split(':')[2].includes("A")){
-                        traffic_source = 'affiliate'
-                    }
-                    else if (urlParamSRC.split(':')[2].includes("D")){
-                        traffic_source = 'display'
+                        traffic_source = 'affiliate_'+product+'_'+campaign;
+                    } else if (urlParamSRC.split(':')[2].includes("D")){
+                        traffic_source = 'display_'+product+'_'+campaign;
                     } 
                 //if no SRC, check if there is a REFERRER 
                 } else if (isNotNullOrEmpty(document.referrer)){
@@ -137,28 +110,31 @@
                 //AMH:pr:A0 = affiliate
                 //AMH:pr:D0 = display
                 if (isNotNullOrEmpty(urlParamSRC)) { //if there is a traffic source query string parameter 
+                    var product = getProduct(urlParamSRC);
+                    var campaign = getCampaign(urlParamSRC);
                     if (urlParamSRC.split(':')[2].includes("S")){
-                        traffic_source = 'social'
+                        traffic_source = 'social_'+product+'_'+campaign;
                     } else if (urlParamSRC.split(':')[2].includes("P")){
-                        traffic_source = 'paid search'
+                        traffic_source = 'paid search_'+product+'_'+campaign;
                     } else if (urlParamSRC.split(':')[2].includes("A")){
-                        traffic_source = 'affiliate'
-                    }
-                    else if (urlParamSRC.split(':')[2].includes("D")){
-                        traffic_source = 'display'
-                    }
+                        traffic_source = 'affiliate_'+product+'_'+campaign;
+                    } else if (urlParamSRC.split(':')[2].includes("D")){
+                        traffic_source = 'display_'+product+'_'+campaign;
+                    } 
                     //traffic_source = urlParamSRC;  //use it, add it to the variable
-                        
                 //if no traffic source value as a query string parameter, check if there is a REFERRER 
                 } else if (isNotNullOrEmpty(document.referrer)) {
                     traffic_source = removeProtocol(document.referrer); //use it, add it to the variable
-                    
                 } else {
                     traffic_source = "none or direct" + traffic_source;
+
                 }    
                 //Update the cookie with the new traffic_source of the new user visit
+                //AMH:ma:D0:CC:01:1710:002:Campaign
                 updated_traffic_source = getCookie(cookieName)+traffic_source_COOKIE_TOKEN_SEPARATOR+traffic_source;
-               if (traffic_source!=getCookie(cookieName).split(traffic_source_COOKIE_TOKEN_SEPARATOR)[getCookie(cookieName).split(traffic_source_COOKIE_TOKEN_SEPARATOR).length-1]){
+                var lastitem = getCookie(cookieName).split(traffic_source_COOKIE_TOKEN_SEPARATOR)[getCookie(cookieName).split(traffic_source_COOKIE_TOKEN_SEPARATOR).length-1];
+
+               if (traffic_source!=lastitem){
                     setCookie(cookieName, updated_traffic_source); //set the cookie
                 } else {
                     var original_traffic_source = getCookie(cookieName);
